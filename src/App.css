@@ -1,38 +1,243 @@
+@import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+:root {
+  --_hue: 237;
+  --_size: 1.5rem;
+  --_radius: 0.2em;
+  --_tspeed_fast: 50ms;
+  --_tspeed_slow: 150ms;
+
+  /* Light Mode */
+  --bg--light: var(--_hue) 30% 94%;
+  --txt--light: var(--_hue) 40% 5%;
+  --accent--light: var(--_hue) 55% 50%;
+  --muted--light: var(--_hue) 30% 88%;
+
+  /* Dark Mode */
+  --bg--dark: var(--_hue) 15% 10%;
+  --txt--dark: var(--_hue) 30% 88%;
+  --accent--dark: var(--_hue) 50% 50%;
+  --muted--dark: var(--_hue) 20% 30%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: var(--bg--dark);
+    --txt: var(--txt--dark);
+    --accent: var(--accent--dark);
+    --muted: var(--muted--dark);
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: var(--bg--light);
+    --txt: var(--txt--light);
+    --accent: var(--accent--light);
+    --muted: var(--muted--light);
+    color-scheme: light;
+  }
+}
+
+:root[color-scheme="dark"] {
+  --bg: var(--bg--dark);
+  --txt: var(--txt--dark);
+  --accent: var(--accent--dark);
+  --muted: var(--muted--dark);
+  color-scheme: dark;
+}
+
+:root[color-scheme="light"] {
+  --bg: var(--bg--light);
+  --txt: var(--txt--light);
+  --accent: var(--accent--light);
+  --muted: var(--muted--light);
+  color-scheme: light;
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --_size: 1.3rem;
+  }
+}
+
 .App {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: hsl(var(--bg));
+  color: hsl(var(--txt));
+  transition: all var(--_tspeed_slow) ease;
+}
+
+.input-wrapper {
+  width: 200px;
+  display: grid;
+  gap: 0.2em;
+  position: relative;
+  margin-block-start: 1.5em;
+}
+
+.form-label {
+  text-transform: uppercase;
+  font-size: 0.9em;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+  margin-inline: 0.45em;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.1em 0.35em;
+  background-color: hsl(var(--muted));
+  transition: transform var(--_tspeed_slow) ease-in,
+    background-color var(--_tspeed_fast) ease-in;
+}
+
+.form-input {
+  border: none;
+  border-radius: var(--_radius);
+  padding: 0.35em 0.55em;
+  width: 100%;
+  background-color: hsl(var(--muted));
+  caret-color: hsl(var(--accent));
+  box-shadow: 0 0 0 -0.1em hsl(var(--bg)), 0 0 0 -0.2em hsl(var(--accent) / 0.8);
+  transition: box-shadow var(--_tspeed_slow) ease-in;
+}
+
+.form-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2em hsl(var(--bg)), 0 0 0 0.4em hsl(var(--accent) / 0.8);
+}
+
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label {
+  transform: translate3d(0, -2.35em, 0);
+  background-color: hsl(var(--bg));
+  color: hsl(var(--accent) / 0.8);
+}
+
+.form-input::placeholder {
+  opacity: 0;
+}
+
+form {
+  margin-block-start: 10px;
+}
+
+.sign-out {
+  position: absolute;
+  top: 0;
+  right: 30px;
+  width: 10px;
+  margin-inline-end: 5px;
+}
+
+.sign-out-btn {
+  padding-block: 0.3em;
+  padding-inline: 0.4em;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  background-color: rgb(165, 152, 136);
+  margin-block-start: 5px;
+}
+
+.enter-chat-btn {
+  width: 200px;
+  background-color: hsl(var(--accent));
+  color: hsl(var(--bg));
+  font-size: 1.125rem;
+  padding-block: 0.45em;
+  margin-block-start: 0.6em;
+  box-shadow: 0.05em 0.1em 0.9em hsl(var(--accent) / 0.6);
+  transition: box-shadow var(--_tspeed_slow) ease-in,
+    background-color var(--_tspeed_slow) ease-in;
+}
+
+.btn {
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  border-radius: var(--_radius);
+}
+
+.btn:active,
+.btn:hover {
+  background-color: hsl(var(--accent) / 0.8);
+  box-shadow: 0 0 0 hsl(var(--accent) / 0.3), 0 0 0 -0.1em hsl(var(--bg)),
+    0 0 0 -0.2em hsl(var(--accent));
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.theme-btn {
+  padding-block: 0.3em;
+  padding-inline: 0.4em;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  margin-block-start: 5px;
+  margin-inline-start: 5px;
+  background-color: rgba(174, 170, 164, 0.4);
+}
+
+.auth {
+  margin-block-start: 2em;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.auth p {
+  font-size: 1.125em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.auth-btn {
+  width: 200px;
+  height: 50px;
+  border: none;
+  background-color: hsl(var(--accent));
+  color: hsl(var(--txt));
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-block-start: 1em;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.theme-icon-wrapper {
+  transition: opacity 0.3s ease-in-out;
 }
 
-.App-link {
-  color: #61dafb;
+.theme-icon-wrapper .hidden {
+  opacity: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.theme-icon-wrapper .active {
+  opacity: 1;
 }
